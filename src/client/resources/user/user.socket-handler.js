@@ -8,6 +8,6 @@ export default (socket) => {
   socket.emit('subscribe', `user-${userId}`);
 
   socket.on('user:updated', (user) => {
-    store.dispatch({ type: 'UPDATE_CURRENT_USER', payload: user });
+    store.dispatch({ type: 'user:set', payload: { user } });
   });
 };

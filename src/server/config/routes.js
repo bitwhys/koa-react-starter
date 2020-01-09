@@ -12,9 +12,9 @@ indexRouter.get('/health', async (ctx) => {
 
 // match all routes but not files (i.e. routes with dots)
 indexRouter.get(/^((?!\.).)*$/, async (ctx) => {
-  if (!ctx.cookies.get(ACCESS_TOKEN_COOKIE_NAME)) {
-    ctx.redirect(config.landingLoginUrl);
-  }
+  // if (!ctx.cookies.get(ACCESS_TOKEN_COOKIE_NAME)) {
+  //   ctx.redirect(config.landingLoginUrl);
+  // }
 
   return ctx.render(config.isDev ? 'index-template' : 'index', {
     isDev: config.isDev,

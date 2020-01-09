@@ -1,23 +1,14 @@
-const initialState = {
-  _id: '',
-  createdOn: new Date(),
-  firstName: '',
-  lastName: '',
-  email: '',
-};
+import * as storage from './user.storage';
+
+const initialState = storage.getUser();
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_CURRENT_USER':
-      return {
-        ...action.payload,
-      };
+    case 'user:set':
+      return action.payload.user;
 
-    case 'UPDATE_CURRENT_USER':
-      return {
-        ...state,
-        ...action.payload,
-      };
+    case 'user:delete':
+      return null;
 
     default:
       return state;

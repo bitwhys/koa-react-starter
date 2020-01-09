@@ -13,22 +13,7 @@ const minLoadingTime = 1500;
 const now = Date.now();
 
 async function renderApp() {
-  const rootEl = document.getElementById('root');
-  if (!(rootEl instanceof Element)) {
-    throw new Error('invalid type');
-  }
-
-  try {
-    await store.dispatch(userActions.fetchCurrentUser());
-    socketService.connect();
-  } catch (error) {
-    console.log(error); // eslint-disable-line no-console
-  }
-
-  ReactDOM.render(
-    <App />,
-    rootEl,
-  );
+  ReactDOM.render(<App />, document.querySelector('#root'));
 }
 
 const hidePoster = () => {

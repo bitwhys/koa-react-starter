@@ -23,6 +23,11 @@ export const connect = () => {
   });
 };
 
+export const disconnect = () => {
+  if (!socket) return;
+  socket.disconnect();
+};
+
 export {
   socket,
 };
