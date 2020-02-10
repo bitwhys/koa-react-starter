@@ -1,12 +1,9 @@
-import { socket } from 'services/socket.service';
+import * as socketService from 'services/socket.service';
+import history from 'services/history.service';
+
+import { routes } from 'routes';
 
 import * as api from './user.api';
-import * as storage from './user.storage';
-
-const setUser = (user) => (dispatch) => {
-  dispatch({ type: 'user:set', payload: { user } });
-  storage.setUser(user);
-};
 
 export const signIn = ({
   email,
@@ -16,8 +13,10 @@ export const signIn = ({
     email,
     password,
   });
-  dispatch(setUser(user));
-  socket.connect();
+  dispatch({ type: 'user:set', payload: { user } });
+
+  const searchParams = new URLSearchParams(window.location.search);
+  history.push(searchParams.get('to') || routes.home.path);
 };
 
 export const signUp = ({
@@ -25,15 +24,17 @@ export const signUp = ({
   lastName,
   email,
   password,
-}) => async (dispatch) => {
-  const { data: user } = await api.signIn({
+}) => async () => {
+  const { data } = await api.signUp({
     firstName,
     lastName,
     email,
     password,
   });
-  dispatch(setUser(user));
-  socket.connect();
+
+  return {
+    signupToken: data.signupToken,
+  };
 };
 
 export const forgot = ({ email }) => async () => {
@@ -42,17 +43,24 @@ export const forgot = ({ email }) => async () => {
 
 export const reset = ({ password, token }) => async (dispatch) => {
   const { data: user } = await api.reset({ password, token });
-  dispatch(setUser(user));
-  socket.connect();
+  dispatch({ type: 'user:set', payload: { user } });
+
+  history.push(routes.home.path);
 };
 
-export const signOut = () => (dispatch) => {
+export const signOut = () => async (dispatch) => {
+  await api.signOut();
   dispatch({ type: 'user:delete' });
-  storage.deleteUser();
-  socket.disconnect();
+  socketService.disconnect();
+  history.push(routes.signIn.path);
+};
+
+export const getCurrentUser = () => async (dispatch) => {
+  const { data: user } = await api.getCurrentUser();
+  dispatch({ type: 'user:set', payload: { user } });
 };
 
 export const updateCurrentUser = (data) => async (dispatch) => {
-  const { data: user } = await api.update(data);
-  dispatch(setUser(user));
+  const { data: user } = await api.updateCurrentUser(data);
+  dispatch({ type: 'user:set', payload: { user } });
 };

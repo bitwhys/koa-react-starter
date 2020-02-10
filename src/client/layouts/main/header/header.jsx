@@ -1,31 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaBell } from 'react-icons/fa';
 
 import { routes } from 'routes';
 import Logo from 'static/images/logo.svg';
 
 import Menu from './components/menu';
-import Search from './components/search';
 import UserMenu from './components/user-menu';
 import styles from './header.styles';
 
 
-const Header = () => {
+function Header() {
   return (
     <div className={styles.header}>
-      <Link className={styles.title} to={routes.home.url()}>
-        <Logo />
+      <Link to={routes.home.url()}>
+        <Logo className={styles.logo} />
       </Link>
 
-      <Menu className={styles.menuList} />
-      <Search className={styles.search} />
+      <div className={styles.navigation}>
+        <Menu />
+      </div>
 
-      <FaBell size={20} className={styles.notificationsBtn} />
-
-      <UserMenu />
+      <div className={styles.menu}>
+        <UserMenu />
+      </div>
     </div>
   );
-};
+}
 
 export default Header;

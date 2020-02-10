@@ -1,10 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import cn from 'classnames';
+import { Link } from 'react-router-dom';
+
+import { routes } from 'routes';
 
 import * as userActions from 'resources/user/user.actions';
-
-import AuthLayout from 'layouts/auth';
 
 import Input from 'components/input';
 import Button from 'components/button';
@@ -16,7 +17,7 @@ function Forgot() {
 
   const [pending, setPending] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
-  const [errors, setErrors] = React.useState({}); 
+  const [errors, setErrors] = React.useState({});
 
   const [email, setEmail] = React.useState('');
 
@@ -35,53 +36,60 @@ function Forgot() {
   }
 
   return (
-    <AuthLayout>
-      <div className={styles.container}>
-        <h1 className={styles.title}>
-          Forgot Password
-        </h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>
+        Forgot Password
+      </h1>
 
-        {submitted && (
-          <>
-            <p className={styles.description}>
-              We sent a reset link to your email:
-            </p>
-            <p className={cn(styles.description, styles.description_bold)}>
-              {email}
-            </p>
-          </>
-        )}
+      {submitted && (
+        <>
+          <p className={styles.description}>
+            We sent a reset link to your email:
+          </p>
+          <p className={cn(styles.description, styles.description_bold)}>
+            {email}
+          </p>
+        </>
+      )}
 
-        {!submitted && (
-          <>
-            <p className={styles.description}>
-              We'll send a reset link to your email
-            </p>
-            <form onSubmit={submit} noValidate className={styles.form}>
+      {!submitted && (
+        <>
+          <p className={styles.description}>
+            We’ll send a reset link to your email
+          </p>
+          <form onSubmit={submit} noValidate className={styles.form}>
+            <div className={styles.row}>
+              <Input
+                type="email"
+                value={email}
+                onChange={setEmail}
+                errors={errors.email}
+                placeholder="Email"
+                disabled={pending}
+              />
+            </div>
+            <div className={styles.row}>
+              <Button
+                type="submit"
+                color="green"
+                disabled={pending || !email}
+              >
+                Send reset link
+              </Button>
+            </div>
+            <div className={styles.links}>
               <div className={styles.row}>
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={setEmail}
-                  errors={errors.email}
-                  placeholder="Email"
-                  disabled={pending}
-                />
+                Remember the password?
+                {' '}
+                <Link to={routes.signIn.url()}>
+                  Sign in
+                </Link>
               </div>
-              <div className={styles.row}>
-                <Button
-                  type="submit"
-                  color="green"
-                  disabled={pending || !email}
-                >
-                  Send Reset Link
-                </Button>
-              </div>
-            </form>
-          </>
-        )}
-      </div>
-    </AuthLayout>
+            </div>
+          </form>
+        </>
+      )}
+    </div>
   );
 }
 

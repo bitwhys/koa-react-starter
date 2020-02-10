@@ -10,7 +10,6 @@ import * as fromUser from 'resources/user/user.selectors';
 import * as userActions from 'resources/user/user.actions';
 import * as userValidators from 'resources/user/user.validators';
 import * as toastActions from 'resources/toast/toast.actions';
-import MainLayout from 'layouts/main';
 
 import styles from './profile.styles';
 
@@ -85,7 +84,7 @@ class Profile extends PureComponent {
     } = this.state;
 
     return (
-      <MainLayout>
+      <>
         <h1>Profile</h1>
 
         <Form>
@@ -143,7 +142,7 @@ class Profile extends PureComponent {
             </Column>
           </Row>
         </Form>
-      </MainLayout>
+      </>
     );
   }
 }

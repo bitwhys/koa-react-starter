@@ -1,10 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import store from 'resources/store';
-import * as userActions from 'resources/user/user.actions';
-import * as socketService from 'services/socket.service';
-
 import { App } from './app';
 
 import styles from './index.styles';

@@ -1,6 +1,4 @@
-import * as storage from './user.storage';
-
-const initialState = storage.getUser();
+const initialState = null;
 
 export default (state = initialState, action) => {
   switch (action.type) {

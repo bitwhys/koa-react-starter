@@ -12,5 +12,5 @@ export function getUser() {
 }
 
 export function deleteUser() {
-  return window.localStorage.deleteItem(keys.USER);
+  return window.localStorage.removeItem(keys.USER);
 }

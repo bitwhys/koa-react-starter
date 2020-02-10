@@ -56,7 +56,5 @@ export const routes = {
     ...defaults,
     name: 'notFound',
     path: '/404',
-    exact: false,
-    private: false,
   },
 };

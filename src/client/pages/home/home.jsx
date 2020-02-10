@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import { FaClock } from 'react-icons/fa';
 
-import MainLayout from 'layouts/main';
-
 import styles from './home.styles';
 
 
@@ -75,11 +73,11 @@ class Home extends PureComponent {
 
   render() {
     return (
-      <MainLayout>
+      <>
         <h1 className={styles.title}>Meetings</h1>
 
         <div>{Home.meetings()}</div>
-      </MainLayout>
+      </>
     );
   }
 }

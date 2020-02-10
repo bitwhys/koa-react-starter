@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 
 import config from 'config';
 import { getAccessToken } from 'helpers/token.helper';
-import userHandler from 'resources/user/user.socket-handler';
+import * as userHandlers from 'resources/user/user.handlers';
 
 
 let socket; // eslint-disable-line import/no-mutable-exports
@@ -15,7 +15,7 @@ export const connect = () => {
 
   socket.on('connect', () => {
     console.log('WS connected'); // eslint-disable-line no-console
-    userHandler(socket);
+    userHandlers.attachSocketEvents(socket);
   });
 
   socket.on('disconnect', () => {
@@ -26,6 +26,10 @@ export const connect = () => {
 export const disconnect = () => {
   if (!socket) return;
   socket.disconnect();
+};
+
+export const disconnected = () => {
+  return !socket || socket.disconnected;
 };
 
 export {

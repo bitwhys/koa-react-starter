@@ -36,6 +36,10 @@ export const signOut = () => {
   return apiClient.post('/account/logout');
 };
 
-export const update = (data) => {
+export const getCurrentUser = () => {
+  return apiClient.get('/users/current');
+};
+
+export const updateCurrentUser = (data) => {
   return apiClient.put('/users/current', data);
 };

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import * as socketService from 'services/socket.service';
+
 import Toast from 'components/toast';
 
 import Header from './header';
@@ -9,14 +11,18 @@ import Footer from './footer';
 import styles from './main-layout.pcss';
 
 
-function MainLayout(props) {
+function MainLayout({ children }) {
+  React.useEffect(() => {
+    if (socketService.disconnected()) socketService.connect();
+  }, []);
+
   return (
     <div className={styles.page}>
       <Header />
 
       <div className={styles.main}>
         <div className={styles.content}>
-          {props.children}
+          {children}
         </div>
       </div>
 
